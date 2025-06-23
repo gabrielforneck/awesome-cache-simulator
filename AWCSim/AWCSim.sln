@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWCSim.Application", "AWCSim.Application\AWCSim.Application.csproj", "{83A42EB3-FEF9-40E4-BAEF-6CEFAA0E89BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AWCSim.Core", "AWCSim.Core\AWCSim.Core.csproj", "{9F9E2564-1E46-434F-AF51-CF591432C04D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83A42EB3-FEF9-40E4-BAEF-6CEFAA0E89BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83A42EB3-FEF9-40E4-BAEF-6CEFAA0E89BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83A42EB3-FEF9-40E4-BAEF-6CEFAA0E89BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83A42EB3-FEF9-40E4-BAEF-6CEFAA0E89BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F9E2564-1E46-434F-AF51-CF591432C04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F9E2564-1E46-434F-AF51-CF591432C04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F9E2564-1E46-434F-AF51-CF591432C04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F9E2564-1E46-434F-AF51-CF591432C04D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {646F277B-C493-436C-B7EB-D6134F7AD82E}
+	EndGlobalSection
+EndGlobal
