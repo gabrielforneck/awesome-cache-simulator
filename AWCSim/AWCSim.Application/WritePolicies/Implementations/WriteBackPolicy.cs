@@ -20,7 +20,6 @@ public class WriteBackPolicy : WritePolicy
         if (chunkFound == null)
         {
             cache.AddChunk(address, beginDirty: true);
-            cache.Statistics.AddCacheWrite();
             cache.Statistics.AddMemoryRead();
             return Result.Success();
         }
@@ -30,6 +29,7 @@ public class WriteBackPolicy : WritePolicy
         {
             lineFound.SetAsDirty();
             cache.Statistics.AddCacheWrite();
+            chunkFound.UpdateUses(lineFound);
             return Result.Success();
         }
 
@@ -37,7 +37,6 @@ public class WriteBackPolicy : WritePolicy
         {
             chunkFound.AddLine(address, beginDirty: true);
             cache.Statistics.AddMemoryRead();
-            cache.Statistics.AddCacheWrite();
             return Result.Success();
         }
 
@@ -48,7 +47,6 @@ public class WriteBackPolicy : WritePolicy
             cache.Statistics.AddMemoryWrite();
 
         cache.Statistics.AddMemoryRead();
-        cache.Statistics.AddCacheWrite();
 
         return Result.Success();
     }

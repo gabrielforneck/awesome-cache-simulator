@@ -16,7 +16,7 @@ public class WriteThroughPolicy : WritePolicy
         if (!cache.Specifications.Address.AddressIsInRange(address))
             return Result.Failure($"O enderço {address:X} não está mapeado dentro da memória.");
 
-        ExecuteCacheWriteIfExists(cache, address); //TODO: Definir com o professor
+        ExecuteCacheWriteIfExists(cache, address);
 
         cache.Statistics.AddMemoryWrite();
         return Result.Success();
@@ -32,7 +32,7 @@ public class WriteThroughPolicy : WritePolicy
         if (lineFound == null)
             return;
 
-        cache.Statistics.AddCacheWrite(); //TODO: Definir com o professor
-        chunkFound.UpdateUses(lineFound); //TODO: Definir com o professor
+        cache.Statistics.AddCacheWrite();
+        chunkFound.UpdateUses(lineFound);
     }
 }
