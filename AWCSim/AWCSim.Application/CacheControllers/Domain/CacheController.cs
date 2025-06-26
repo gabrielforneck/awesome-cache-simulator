@@ -19,7 +19,26 @@ public class CacheController
         Cache = cache;
     }
 
-    public Result ExecuteRead(int address) => ReadPolicy.ExecuteRead(Cache, address);
+    public Result ExecuteRead(int address)
+    {
+        var executionResult = ReadPolicy.ExecuteRead(Cache, address);
+        if (executionResult.IsFailure)
+            return executionResult;
 
-    public Result ExecuteWrite(int address) => WritePolicy.ExecuteWrite(Cache, address);
+        Cache.Statistics.AddExecutedRead();
+
+        return Result.Success();
+    }
+
+
+    public Result ExecuteWrite(int address)
+    {
+        var executionResult = WritePolicy.ExecuteWrite(Cache, address);
+        if (executionResult.IsFailure)
+            return executionResult;
+
+        Cache.Statistics.AddExecutedWrite();
+
+        return Result.Success();
+    }
 }
