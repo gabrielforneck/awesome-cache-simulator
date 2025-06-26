@@ -20,7 +20,7 @@ public static class Program
         if (runResult.IsFailure)
             Terminate(runResult.Error, -1);
 
-
+        runResult.Value.WriteToFile();
     }
 
     private static void Terminate(string errorMessage, int exitCode)
