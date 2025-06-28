@@ -79,13 +79,13 @@ public class CommandProvider : IDisposable
         return Result.Failure<CacheCommand>($"Comando da linha '{line}' não mapeado.");
     }
 
-    protected static bool TryParseAddress(string address, [NotNullWhen(true)] out uint? parsedAddress)
+    protected static bool TryParseAddress(string address, [NotNullWhen(true)] out int? parsedAddress)
     {
         parsedAddress = null;
 
         try
         {
-            parsedAddress = Convert.ToUInt32(address, 16);
+            parsedAddress = Convert.ToInt32(address, 16);
             return true;
         }
         catch
