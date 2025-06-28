@@ -41,7 +41,7 @@ public class TextReportWriter
 
     protected void Write(string path, int lineLength)
     {
-        using var stream = File.OpenWrite(path);
+        using var stream = File.Create(path);
         using var writer = new StreamWriter(stream);
 
         var lineSeparator = CreateLineSeparator(lineLength);
