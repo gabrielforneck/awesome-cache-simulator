@@ -48,29 +48,13 @@ public class CommandProvider : IDisposable
         return Result.Success<CacheCommand?>(parseResult.Value);
     }
 
-    public bool HasNextCommand() => FindNextLine();
-
-    protected bool FindNextLine()
+    protected bool GetNextLine([NotNullWhen(true)] out string? line)
     {
         while (!Reader.Value.EndOfStream)
         {
-            var line = Reader.Value.ReadLine();
+            line = Reader.Value.ReadLine();
             if (line != null && line.Length > 0)
-            {
-                Stream.Seek(-1, SeekOrigin.Current);
                 return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected bool GetNextLine([NotNullWhen(true)] out string? line)
-    {
-        if (FindNextLine())
-        {
-            line = Reader.Value.ReadLine()!;
-            return true;
         }
 
         line = null;
@@ -95,13 +79,13 @@ public class CommandProvider : IDisposable
         return Result.Failure<CacheCommand>($"Comando da linha '{line}' não mapeado.");
     }
 
-    protected static bool TryParseAddress(string address, [NotNullWhen(true)] out int? parsedAddress)
+    protected static bool TryParseAddress(string address, [NotNullWhen(true)] out uint? parsedAddress)
     {
         parsedAddress = null;
 
         try
         {
-            parsedAddress = Convert.ToInt32(address, 16);
+            parsedAddress = Convert.ToUInt32(address, 16);
             return true;
         }
         catch
