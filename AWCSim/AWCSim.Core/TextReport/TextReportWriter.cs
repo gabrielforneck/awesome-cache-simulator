@@ -72,7 +72,7 @@ public class TextReportWriter
         if (text.Length < lineLength)
             text += new string(' ', lineLength - text.Length);
 
-        return $" {DefaultHorizontalSeparator} {text} {DefaultHorizontalSeparator} ";
+        return $" {DefaultVerticalSeparator} {text} {DefaultVerticalSeparator} ";
     }
 
     protected int FindBiggestLineLength()
