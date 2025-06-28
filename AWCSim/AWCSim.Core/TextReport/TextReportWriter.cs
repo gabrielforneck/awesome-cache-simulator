@@ -41,6 +41,7 @@ public class TextReportWriter
 
     protected void Write(string path, int lineLength)
     {
+        CreateFolderIfNotExists(path);
         using var stream = File.Create(path);
         using var writer = new StreamWriter(stream);
 
@@ -87,5 +88,16 @@ public class TextReportWriter
             return titleLength;
 
         return biggestLineLength;
+    }
+
+    protected static void CreateFolderIfNotExists(string path)
+    {
+        var folder = Path.GetDirectoryName(path);
+
+        if (string.IsNullOrWhiteSpace(folder))
+            return;
+        
+        if (!Directory.Exists(folder))
+            Directory.CreateDirectory(folder);
     }
 }

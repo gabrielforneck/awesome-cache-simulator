@@ -28,6 +28,10 @@ public class CommandProvider : IDisposable
         {
             return Result.Failure<CommandProvider>("Arquivo de comandos da memória não encontrado.");
         }
+        catch (DirectoryNotFoundException)
+        {
+            return Result.Failure<CommandProvider>("Arquivo de comandos da memória não encontrado.");
+        }
         catch (Exception ex)
         {
             return Result.Failure<CommandProvider>($"Não foi possível abrir o arquivo de comandos: {ex.Message}.");
