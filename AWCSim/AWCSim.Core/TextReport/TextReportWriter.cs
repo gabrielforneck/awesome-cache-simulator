@@ -32,6 +32,12 @@ public class TextReportWriter
         return this;
     }
 
+    public TextReportWriter AddLine(string format, params object?[] args)
+    {
+        CurrentSection.AddLine(string.Format(format, args));
+        return this;
+    }
+
     public void Write(string path)
     {
         var biggestLineLength = FindBiggestLineLength();
