@@ -10,7 +10,7 @@ public static class Program
 
     public static void Main()
     {
-        var loadAppConfigurationResult = AppConfiguration.LoadFromDefaultFileLocation();
+        var loadAppConfigurationResult = AppConfiguration.Load();
         if (loadAppConfigurationResult.IsFailure)
             Terminate(loadAppConfigurationResult.Error, -1);
 

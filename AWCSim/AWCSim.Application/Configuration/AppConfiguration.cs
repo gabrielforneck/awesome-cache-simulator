@@ -2,19 +2,29 @@
 using AWCSim.Application.WritePolicies.Models.Enums;
 using AWCSim.Core.Results;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AWCSim.Application.Configuration;
 
 public class AppConfiguration
 {
+    [JsonPropertyName("PoliticaEscrita")]
     public EWritePolicy WritePolicy { get; set; }
+    [JsonPropertyName("TamanhoLinha")]
     public int LineSize { get; set; }
+    [JsonPropertyName("QuantidadeLinhas")]
     public int LinesCount { get; set; }
+    [JsonPropertyName("QuantidadeLinhasPorConjunto")]
     public int LinesPerChunkCount { get; set; }
+    [JsonPropertyName("TempoCache")]
     public int CacheOperationTime { get; set; }
+    [JsonPropertyName("TempoMemoria")]
     public int MainMemoryOperationTime { get; set; }
+    [JsonPropertyName("PolicitaSobrecrita")]
     public EOverridePolicy OverridePolicy { get; set; }
+    [JsonPropertyName("LocalSaidaRelatorio")]
     public string? ReportOutputFileLocation { get; set; }
+    [JsonPropertyName("LocalComandosCache")]
     public string MemoryCommandsFileLocation { get; set; }
 
     protected const string DefaultFileLocation = "appsettings.json";
@@ -32,7 +42,7 @@ public class AppConfiguration
         MemoryCommandsFileLocation = memoryCommandsFileLocation;
     }
 
-    public static Result<AppConfiguration> LoadFromDefaultFileLocation()
+    public static Result<AppConfiguration> Load()
     {
         try
         {
@@ -45,6 +55,8 @@ public class AppConfiguration
             var validationResult = appConfiguration.Validate();
             if (validationResult.IsFailure)
                 return Result.Failure<AppConfiguration>(validationResult.Error);
+
+            appConfiguration.AplyEnvironmentVariables();
 
             return Result.Success(appConfiguration);
         }
@@ -64,5 +76,14 @@ public class AppConfiguration
             return Result.Failure("Deve ser especificado o local do arquivo dos endereços da cache.");
 
         return Result.Success();
+    }
+
+
+    public void AplyEnvironmentVariables()
+    {
+        MemoryCommandsFileLocation = Environment.ExpandEnvironmentVariables(MemoryCommandsFileLocation);
+
+        if (!string.IsNullOrWhiteSpace(ReportOutputFileLocation))
+            ReportOutputFileLocation = Environment.ExpandEnvironmentVariables(ReportOutputFileLocation);
     }
 }
