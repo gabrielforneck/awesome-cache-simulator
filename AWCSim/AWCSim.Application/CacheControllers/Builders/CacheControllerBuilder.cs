@@ -66,7 +66,7 @@ public class CacheControllerBuilder
 
     public Result<CacheController> Build()
     {
-        var cacheSpecifications = new CacheSpecifications(LineSize, LinesCount, LinesPerChunkCount, CacheOperationTime);
+        var cacheSpecifications = new CacheSpecifications(LineSize, LinesCount, LinesPerChunkCount, CacheOperationTime, WritePolicy, OverridePolicy);
         var cacheSpecificationsValidationResult = cacheSpecifications.Validate();
 
         if (cacheSpecificationsValidationResult.IsFailure)
