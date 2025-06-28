@@ -25,7 +25,7 @@ public class Result
     public static Result Success() => new Result(true, string.Empty);
     public static Result Failure(string error) => new Result(false, error);
     public static Result<T> Success<T>(T value) => new Result<T>(true, string.Empty, value);
-    public static Result<T> Failure<T>(string error) => new Result<T>(true, error, default);
+    public static Result<T> Failure<T>(string error) => new Result<T>(false, error, default);
 }
 
 public class Result<T> : Result
