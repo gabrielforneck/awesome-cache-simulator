@@ -1,7 +1,6 @@
 ﻿using AWCSim.Application.CacheControllers.Domain;
 using AWCSim.Application.CachesSpecifications.Domain;
 using AWCSim.Application.WritePolicies.Abstract;
-using AWCSim.Core.Results;
 
 namespace AWCSim.Application.WritePolicies.Implementations;
 
@@ -11,17 +10,14 @@ public class WriteBackPolicy : WritePolicy
     {
     }
 
-    public override Result ExecuteWrite(Cache cache, int address)
+    public override void ExecuteWrite(Cache cache, int address)
     {
-        if (!cache.Specifications.Address.AddressIsInRange(address))
-            return Result.Failure($"O enderço {address:X} não está mapeado dentro da memória.");
-
         var chunkFound = cache.FindChunk(address);
         if (chunkFound == null)
         {
             cache.AddChunk(address, beginDirty: true);
             cache.Statistics.AddMemoryRead();
-            return Result.Success();
+            return;
         }
 
         var lineFound = chunkFound.FindLine(address);
@@ -30,14 +26,14 @@ public class WriteBackPolicy : WritePolicy
             lineFound.SetAsDirty();
             cache.Statistics.AddCacheWrite();
             chunkFound.UpdateUses(lineFound);
-            return Result.Success();
+            return;
         }
 
         if (!chunkFound.IsFull)
         {
             chunkFound.AddLine(address, beginDirty: true);
             cache.Statistics.AddMemoryRead();
-            return Result.Success();
+            return;
         }
 
         var selectedLine = cache.OverridePolicy.PickLineToRemove(chunkFound);
@@ -47,7 +43,5 @@ public class WriteBackPolicy : WritePolicy
             cache.Statistics.AddMemoryWrite();
 
         cache.Statistics.AddMemoryRead();
-
-        return Result.Success();
     }
 }

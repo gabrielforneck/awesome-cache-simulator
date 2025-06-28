@@ -26,7 +26,7 @@ public static class SimulationHandler
 
     private static Result<CacheStatistics> Run(CommandProvider commandProvider, CacheController cacheController)
     {
-        while (commandProvider.HasNextCommand())
+        while (true)
         {
             var getResult = commandProvider.GetNextCommand();
             if (getResult.IsFailure)

@@ -1,7 +1,6 @@
 ﻿using AWCSim.Application.CacheControllers.Domain;
 using AWCSim.Application.CachesSpecifications.Domain;
 using AWCSim.Application.WritePolicies.Abstract;
-using AWCSim.Core.Results;
 
 namespace AWCSim.Application.WritePolicies.Implementations;
 
@@ -11,15 +10,10 @@ public class WriteThroughPolicy : WritePolicy
     {
     }
 
-    public override Result ExecuteWrite(Cache cache, int address)
+    public override void ExecuteWrite(Cache cache, int address)
     {
-        if (!cache.Specifications.Address.AddressIsInRange(address))
-            return Result.Failure($"O enderço {address:X} não está mapeado dentro da memória.");
-
         ExecuteCacheWriteIfExists(cache, address);
-
         cache.Statistics.AddMemoryWrite();
-        return Result.Success();
     }
 
     protected static void ExecuteCacheWriteIfExists(Cache cache, int address)

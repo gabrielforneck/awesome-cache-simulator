@@ -13,5 +13,5 @@ public abstract class WritePolicy
         CacheSpecifications = cacheSpecifications;
     }
 
-    public abstract Result ExecuteWrite(Cache cache, int address);
+    public abstract void ExecuteWrite(Cache cache, int address);
 }

@@ -4,8 +4,6 @@ namespace AWCSim.Application.CacheAddressesSpecifications.Domain;
 
 public class CacheAddressSpecifications
 {
-    public int AddressBits { get; }
-    public int AddressMask { get; }
     public int TagBits { get; }
     public int TagMask { get; }
     public int IndexBits { get; }
@@ -13,10 +11,10 @@ public class CacheAddressSpecifications
     public int OffsetBits { get; }
     public int OffsetMask { get; }
 
-    private CacheAddressSpecifications(int addressBits, int addressMask, int tagBits, int tagMask, int indexBits, int indexMask, int offsetBits, int offsetMask)
+    protected const int AddressSize = 32;
+
+    private CacheAddressSpecifications(int tagBits, int tagMask, int indexBits, int indexMask, int offsetBits, int offsetMask)
     {
-        AddressBits = addressBits;
-        AddressMask = addressMask;
         TagBits = tagBits;
         TagMask = tagMask;
         IndexBits = indexBits;
@@ -29,18 +27,14 @@ public class CacheAddressSpecifications
     {
         var offsetBits = (int)Math.Log(cacheSpecifications.LineSize, 2);
         var indexBits = (int)Math.Log(cacheSpecifications.LinesCount / cacheSpecifications.LinesPerChunkCount, 2);
-        var addressBits = (int)Math.Log(cacheSpecifications.LinesCount * cacheSpecifications.LineSize, 2);
-        var tagBits = addressBits - indexBits - offsetBits;
+        var tagBits = AddressSize - indexBits - offsetBits;
 
-        var addressMask = CreateMask(addressBits);
         var tagMask = CreateMask(tagBits, indexBits + offsetBits);
         var indexMask = CreateMask(indexBits, offsetBits);
         var offsetMask = CreateMask(offsetBits);
 
-        return new(addressBits, addressMask, tagBits, tagMask, indexBits, indexMask, offsetBits, offsetMask);
+        return new(tagBits, tagMask, indexBits, indexMask, offsetBits, offsetMask);
     }
-
-    public bool AddressIsInRange(int address) => (address - address & AddressMask) == 0;
 
     public int GetTagFromAddress(int address) => address & TagMask;
 

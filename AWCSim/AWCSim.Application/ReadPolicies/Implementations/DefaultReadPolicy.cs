@@ -1,22 +1,18 @@
 ﻿using AWCSim.Application.CacheControllers.Domain;
 using AWCSim.Application.ReadPolicies.Abstract;
-using AWCSim.Core.Results;
 
 namespace AWCSim.Application.ReadPolicies.Implementations;
 
 public class DefaultReadPolicy : ReadPolicy
 {
-    public override Result ExecuteRead(Cache cache, int address)
+    public override void ExecuteRead(Cache cache, int address)
     {
-        if (!cache.Specifications.Address.AddressIsInRange(address))
-            return Result.Failure($"O endereço {address} está fora do tamanho da cache.");
-
         var chunkFound = cache.FindChunk(address);
         if (chunkFound == null)
         {
             cache.AddChunk(address);
             cache.Statistics.AddMemoryRead();
-            return Result.Success();
+            return;
         }
 
         var lineFound = chunkFound.FindLine(address);
@@ -24,14 +20,14 @@ public class DefaultReadPolicy : ReadPolicy
         {
             cache.Statistics.AddCacheRead();
             chunkFound.UpdateUses(lineFound);
-            return Result.Success();
+            return;
         }
 
         if (!chunkFound.IsFull)
         {
             chunkFound.AddLine(address);
             cache.Statistics.AddMemoryRead();
-            return Result.Success();
+            return;
         }
 
         var selectedLine = cache.OverridePolicy.PickLineToRemove(chunkFound);
@@ -41,6 +37,5 @@ public class DefaultReadPolicy : ReadPolicy
             cache.Statistics.AddMemoryWrite();
 
         cache.Statistics.AddMemoryRead();
-        return Result.Success();
     }
 }

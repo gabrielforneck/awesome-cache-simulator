@@ -21,10 +21,7 @@ public class CacheController
 
     public Result ExecuteRead(int address)
     {
-        var executionResult = ReadPolicy.ExecuteRead(Cache, address);
-        if (executionResult.IsFailure)
-            return executionResult;
-
+        ReadPolicy.ExecuteRead(Cache, address);
         Cache.Statistics.AddExecutedRead();
 
         return Result.Success();
@@ -33,10 +30,7 @@ public class CacheController
 
     public Result ExecuteWrite(int address)
     {
-        var executionResult = WritePolicy.ExecuteWrite(Cache, address);
-        if (executionResult.IsFailure)
-            return executionResult;
-
+        WritePolicy.ExecuteWrite(Cache, address);
         Cache.Statistics.AddExecutedWrite();
 
         return Result.Success();
