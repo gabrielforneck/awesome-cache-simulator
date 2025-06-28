@@ -78,5 +78,13 @@ public class CacheStatistics
         return Path.Combine(path, GenerateFileName());
     }
 
-    protected string GenerateFileName() => $"report_{CacheSpecifications.LineSize}_{CacheSpecifications.LinesCount}_{CacheSpecifications.LinesPerChunkCount}_{CacheSpecifications.SuccessfulOperationTime}_{MainMemorySpecifications.OperationTime}_{CacheSpecifications.Policies.WritePolicy}_{CacheSpecifications.Policies.OverridePolicy}.txt";
+    protected string GenerateFileName()
+        => string.Format("report_{0}_{1}_{2}_{3}_{4}_{5}_{6}.txt",
+            CacheSpecifications.LineSize,
+            CacheSpecifications.LinesCount,
+            CacheSpecifications.LinesPerChunkCount,
+            CacheSpecifications.SuccessfulOperationTime,
+            MainMemorySpecifications.OperationTime,
+            CacheSpecifications.Policies.WritePolicy,
+            CacheSpecifications.Policies.OverridePolicy);
 }
