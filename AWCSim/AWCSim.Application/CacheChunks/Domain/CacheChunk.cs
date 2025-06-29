@@ -7,7 +7,7 @@ namespace AWCSim.Application.CacheChunks.Domain;
 
 public class CacheChunk : IEnumerable<CacheLine>
 {
-    public int Index { get; set; }
+    public int Index { get; }
     public bool IsFull => Lines.Count >= MaxLength;
     public int Length => Lines.Count;
     protected List<CacheLine> Lines { get; }
