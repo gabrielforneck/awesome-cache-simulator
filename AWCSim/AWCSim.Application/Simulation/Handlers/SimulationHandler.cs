@@ -40,6 +40,8 @@ public static class SimulationHandler
                 return Result.Failure<CacheStatistics>(executionResult.Error);
         }
 
+        cacheController.CleanCache();
+
         return Result.Success(cacheController.Statistics);
     }
 

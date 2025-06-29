@@ -80,4 +80,6 @@ public class CacheChunk : IEnumerable<CacheLine>
         foreach (var line in orderedLines)
             line.SetLastTimeUsed(++lastTimeUsed);
     }
+
+    public int GetNumberOfDirtyLines() => Lines.Count(l => l.IsDirty);
 }

@@ -27,4 +27,8 @@ public class Cache
     {
         Chunks.Add(CacheChunk.Create(Specifications, address, beginDirty: beginDirty));
     }
+
+    internal void Clear() => Chunks.Clear();
+
+    internal int GetNumberOfDirtyLines() => Chunks.Sum(c => c.GetNumberOfDirtyLines());
 }

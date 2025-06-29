@@ -35,4 +35,11 @@ public class CacheController
 
         return Result.Success();
     }
+
+    public void CleanCache()
+    {
+        var dirtyLinesQuantity = Cache.GetNumberOfDirtyLines();
+        Statistics.AddMemoryWrites(dirtyLinesQuantity);
+        Cache.Clear();
+    }
 }

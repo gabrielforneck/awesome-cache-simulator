@@ -28,15 +28,27 @@ public class CacheStatistics
 
     public void AddExecutedWrite() => TotalExecutedWrites++;
 
+    public void AddExecutedWrites(int quantity) => TotalExecutedWrites += quantity;
+
     public void AddExecutedRead() => TotalExecutedReads++;
+
+    public void AddExecutedReads(int quantity) => TotalExecutedReads += quantity;
 
     public void AddMemoryWrite() => MainMemoryWrites++;
 
+    public void AddMemoryWrites(int quantity) => MainMemoryWrites += quantity;
+
     public void AddMemoryRead() => MainMemoryReads++;
+
+    public void AddMemoryReads(int quantity) => MainMemoryReads += quantity;
 
     public void AddCacheWrite() => CacheWrites++;
 
+    public void AddCacheWrites(int quantity) => CacheWrites += quantity;
+
     public void AddCacheRead() => CacheReads++;
+
+    public void AddCacheReads(int quantity) => CacheReads += quantity;
 
     public void WriteToFile() => WriteToFile(GetOutputFileLocation());
 
