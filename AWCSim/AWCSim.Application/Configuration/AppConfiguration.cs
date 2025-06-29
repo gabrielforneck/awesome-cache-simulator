@@ -24,7 +24,7 @@ public class AppConfiguration
     public EOverridePolicy OverridePolicy { get; set; }
     [JsonPropertyName("LocalSaidaRelatorio")]
     public string? ReportOutputFileLocation { get; set; }
-    [JsonPropertyName("LocalComandosCache")]
+    [JsonPropertyName("ArquivoComandosCache")]
     public string MemoryCommandsFileLocation { get; set; }
 
     protected const string DefaultFileLocation = "appsettings.json";
@@ -47,7 +47,7 @@ public class AppConfiguration
         try
         {
             var fileContent = File.ReadAllText(DefaultFileLocation);
-            var appConfiguration = JsonSerializer.Deserialize<AppConfiguration>(fileContent);
+            var appConfiguration = JsonSerializer.Deserialize<AppConfiguration>(fileContent, options: GetSerializerOptions());
 
             if (appConfiguration == null)
                 return Result.Failure<AppConfiguration>("Não foi possível converter o arquivo de configurações.");
@@ -86,4 +86,9 @@ public class AppConfiguration
         if (!string.IsNullOrWhiteSpace(ReportOutputFileLocation))
             ReportOutputFileLocation = Environment.ExpandEnvironmentVariables(ReportOutputFileLocation);
     }
+
+    protected static JsonSerializerOptions GetSerializerOptions() => new()
+    {
+        ReadCommentHandling = JsonCommentHandling.Skip
+    };
 }
